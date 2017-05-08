@@ -1,5 +1,9 @@
 defmodule Kronos.Ecto.Timestamp do 
 
+  @moduledoc """
+  Custom Type for Kronos.t
+  """
+
   @behaviour Ecto.Type
 
   def type, do: :datetime
@@ -30,7 +34,7 @@ defmodule Kronos.Ecto.Timestamp do
   @doc """
   Load from the native Ecto representation
   """
-  def load(input)
+  def load(output)
 
   def load(%DateTime{} = dt) do 
     {:ok, Kronos.from_datetime(dt)}
@@ -42,8 +46,20 @@ defmodule Kronos.Ecto.Timestamp do
     |> or_error
   end
   def load(_), do: :error
+
+  @doc """
+  Load to the native Ecto representation
+  """
+  def dump(input)
+  def dump(%DateTime{} = dt), do: {:ok, dt}
+  def dump({Kronos, _, _, _, _} = kt) do 
+    Kronos.to_datetime(kt)
+    |> or_error
+  end
+  def dump(_), do: :error
   
 
+  @doc false
   defp or_error(value) do 
     case value do 
       {:ok, _} -> value 
