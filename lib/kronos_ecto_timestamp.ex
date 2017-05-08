@@ -25,7 +25,7 @@ defmodule Kronos.Ecto.Timestamp do
   end
   def cast(t) do
     case t do 
-      {Kronos, _, _, _, _} -> 
+      {{Kronos, _, _, _, _}, _} -> 
         or_error(Kronos.to_datetime(t))
       _ -> :error
     end
@@ -52,7 +52,7 @@ defmodule Kronos.Ecto.Timestamp do
   """
   def dump(input)
   def dump(%DateTime{} = dt), do: {:ok, dt}
-  def dump({Kronos, _, _, _, _} = kt) do 
+  def dump({{Kronos, _, _, _, _}, _} = kt) do 
     Kronos.to_datetime(kt)
     |> or_error
   end
