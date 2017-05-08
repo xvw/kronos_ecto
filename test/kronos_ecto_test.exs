@@ -48,5 +48,20 @@ defmodule Kronos.EctoTest do
     assert Kronos.Ecto.Timestamp.load("k") == :error
   end
 
+  test "dump dateTime" do 
+    dt = DateTime.from_unix!(0)
+    assert Kronos.Ecto.Timestamp.cast(dt) == DateTime.from_unix(0)
+  end
+
+  test "dump from Kronos" do 
+    dt = Kronos.new!(45678)
+    assert Kronos.Ecto.Timestamp.cast(dt) == DateTime.from_unix(45678)
+  end
+
+  test "dump failure" do 
+    assert Kronos.Ecto.Timestamp.cast("d") == :error
+  end
+  
+
 
 end
