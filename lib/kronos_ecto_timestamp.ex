@@ -18,10 +18,15 @@ defmodule Kronos.Ecto.Timestamp do
       :error -> :error
     end
   end
-  def cast(t) do 
-    Kronos.to_datetime(t)
-    |> or_error
+  def cast(t) do
+    case t do 
+      {Kronos, _, _, _, _} -> 
+        or_error(Kronos.to_datetime(t))
+      _ -> :error
+    end
   end
+
+
   
 
   defp or_error(value) do 
