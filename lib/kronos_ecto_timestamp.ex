@@ -7,6 +7,7 @@ defmodule Kronos.Ecto.Timestamp do
   @doc """
   Handle casting to Kronos.Ecto.Timestamp
   """
+  def cast(raw_value)
   def cast(%DateTime{} = dt),     do: {:ok, dt}
   def cast(i) when is_integer(i), do: or_error(DateTime.from_unix(i))
   def cast(f) when is_float(f),   do: cast(round(f))
