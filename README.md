@@ -1,6 +1,7 @@
 # Kronos.Ecto
 
-**TODO: Add description**
+Provide an `Ecto` custom type (`Kronos.Ecto.Timestamp`) to manage Kronos at the 
+**db-level** !
 
 ## Installation
 
