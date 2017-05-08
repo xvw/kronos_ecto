@@ -8,6 +8,7 @@ defmodule Kronos.Ecto.Timestamp do
   Handle casting to Kronos.Ecto.Timestamp
   """
   def cast(raw_value)
+
   def cast(%DateTime{} = dt),     do: {:ok, dt}
   def cast(i) when is_integer(i), do: or_error(DateTime.from_unix(i))
   def cast(f) when is_float(f),   do: cast(round(f))
@@ -26,7 +27,21 @@ defmodule Kronos.Ecto.Timestamp do
     end
   end
 
+  @doc """
+  Load from the native Ecto representation
+  """
+  def load(input)
 
+  def load(%DateTime{} = dt) do 
+    {:ok, Kronos.from_datetime(dt)}
+  end
+
+  def load({{a, b, c}, {d, e, f, _}}), do: load({{a, b, c}, {d, e, f}})
+  def load({{_, _, _}, {_, _, _}} = tpl) do 
+    Kronos.new(tpl)
+    |> or_error
+  end
+  def load(_), do: :error
   
 
   defp or_error(value) do 
